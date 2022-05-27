@@ -2,9 +2,11 @@ package com.group.medic.document.service;
 
 import com.group.medic.document.model.*;
 import com.group.medic.document.repository.DocumentRepository;
+import com.group.medic.security.SecurityUtil;
 import com.group.medic.user.model.User;
 import com.group.medic.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,13 +17,11 @@ public class DocumentService {
     @Autowired
     private DocumentRepository repository;
 
-
     @Autowired
     private UserService userService;
 
     public List<Document> getAll() {
-        //TODO change for security
-        int userId = 1;
+        int userId = SecurityUtil.authUserId();
         List<Document> documents = repository.getAll();
         documents.forEach(d -> {
             DocumentStatusOverview overview = getAllStatuses(d.getId());
@@ -47,6 +47,7 @@ public class DocumentService {
     }
 
     public void delete(int id) {
+        repository.deleteUserDocumentRelations(id);
         repository.delete(id);
     }
 
@@ -83,6 +84,19 @@ public class DocumentService {
 
     public boolean update(Document document) {
         return repository.update(document);
+    }
+
+    public boolean updateDocumentUser(Integer documentId, List<Integer> userIds ) {
+
+        repository.deleteUserDocumentRelations(documentId);
+        for (Integer userId : userIds) {
+            UserDocument userDocument = new UserDocument();
+            userDocument.setDocumentId(documentId);
+            userDocument.setUserId(userId);
+            userDocument.setDocumentStatus(DocumentStatus.NEW);
+            repository.addUserDocument(userDocument);
+        }
+        return true;
     }
 
 }

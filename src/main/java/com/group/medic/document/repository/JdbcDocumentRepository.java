@@ -77,10 +77,17 @@ public class JdbcDocumentRepository implements DocumentRepository {
         return document;
     }
 
-    //TODO
     @Override
     public boolean update(Document document) {
-        return false;
+        MapSqlParameterSource map = new MapSqlParameterSource()
+                .addValue("id", document.getId())
+                .addValue("title", document.getTitle())
+                .addValue("link", document.getLink());
+
+
+        return 1 == namedParameterJdbcTemplate.update("update document set title = :title, link = :link " +
+               "where id = :id", map);
+
     }
 
     @Override
@@ -117,5 +124,10 @@ public class JdbcDocumentRepository implements DocumentRepository {
         Number newKey = insertUserDocument.executeAndReturnKey(map);
         userDocument.setId(newKey.intValue());
         return userDocument;
+    }
+
+    @Override
+    public void deleteUserDocumentRelations(Integer documentId) {
+        jdbcTemplate.update("DELETE FROM user_document WHERE document_id=?", documentId);
     }
 }

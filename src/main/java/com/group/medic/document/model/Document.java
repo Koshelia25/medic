@@ -1,5 +1,7 @@
 package com.group.medic.document.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 public class Document {
@@ -64,7 +66,7 @@ public class Document {
     public void setDocumentStatus(DocumentStatus documentStatus) {
         this.documentStatus = documentStatus;
     }
-
+    @JsonIgnore
     public List<Integer> getUserIds() {
         return userIds;
     }

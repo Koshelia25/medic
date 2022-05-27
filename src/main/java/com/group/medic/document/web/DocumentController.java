@@ -52,8 +52,12 @@ public class DocumentController {
 
     //TODO
     @PutMapping
-    public boolean update(Document document) {
-        return false;
+    public boolean update(@RequestBody Document document) {
+        return service.update(document);
+    }
+    @PostMapping("/document-user/{documentId}")
+    public boolean updateDocumentUser(@PathVariable Integer documentId, @RequestBody List<Integer> userIds ) {
+        return service.updateDocumentUser(documentId, userIds);
     }
 }
 

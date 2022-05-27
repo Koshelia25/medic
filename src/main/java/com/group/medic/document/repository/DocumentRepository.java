@@ -26,4 +26,7 @@ public interface DocumentRepository {
     boolean updateStatus(Integer id, Integer userId, DocumentStatus status);
 
     UserDocument addUserDocument(UserDocument userDocument);
+
+    void deleteUserDocumentRelations(Integer documentId);
+
 }

@@ -49,10 +49,10 @@ public class JdbcUserRepository implements UserRepository{
         return DataAccessUtils.singleResult(users);
     }
 
-    // TODO
+
     @Override
     public void delete(int id) {
-
+        jdbcTemplate.update("DELETE FROM users WHERE id=?", id);
     }
 
     @Override

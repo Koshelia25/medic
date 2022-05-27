@@ -36,8 +36,8 @@ public class UserController {
         return service.add(user);
     }
 
-    @PutMapping("/{id}")
-    public boolean update(@PathVariable Integer id, @RequestBody User user) {
+    @PutMapping
+    public boolean update(@RequestBody User user) {
         return service.update(user);
     }
 }

@@ -75,4 +75,9 @@ public class InMemoryDocumentRepository implements DocumentRepository {
     public UserDocument addUserDocument(UserDocument userDocument) {
         return null;
     }
+
+    @Override
+    public void deleteUserDocumentRelations(Integer documentId) {
+
+    }
 }

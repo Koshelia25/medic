@@ -10,17 +10,7 @@ public class DocumentStatusOverview {
 
     private final List<DocumentStatusPerUser> statusesPerUsers;
 
-    private String finalStatus;
-
     public List<DocumentStatusPerUser> getStatusesPerUsers() {
         return statusesPerUsers;
-    }
-
-    public String getFinalStatus() {
-        return finalStatus;
-    }
-
-    public void setFinalStatus(String finalStatus) {
-        this.finalStatus = finalStatus;
     }
 }
